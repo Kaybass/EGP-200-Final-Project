@@ -1,0 +1,10 @@
+skyboxes
+http://www.zfight.com/misc/images/textures/envmaps/stormydays_large.jpg
+http://i.imgur.com/xoGVD3X.jpg
+-> shopped by D. Buckstein to fix seams
+
+high-res earth
+http://www.blenderguru.com/tutorials/create-a-realistic-earth/
+
+stone
+http://www.3dkingdoms.com/CW3D/Doc/displacement-maps.jpg

@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F5A92F5F-F964-47D6-83B4-3802F1B44AC3}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>egpDemo_freeglut</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\..\bin\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)build\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\..\bin\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)build\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\..\bin\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)build\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)..\..\..\bin\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDir)build\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_CONSOLE;_DEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\source\$(ProjectName);$(ProjectDir)..\..\..\include;$(ProjectDir)..\..\..\thirdparty\include;$(DEV_SDK_DIR)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\lib\$(PlatformTarget)\$(PlatformToolset)\$(Configuration);$(ProjectDir)..\..\..\thirdparty\lib\$(PlatformTarget);$(ProjectDir)..\..\..\thirdparty\lib\$(PlatformTarget)\$(PlatformToolset)\$(Configuration);$(DEV_SDK_DIR)lib\$(PlatformTarget);$(DEV_SDK_DIR)lib\$(PlatformTarget)\$(PlatformToolset)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>egpLib.lib;opengl32.lib;glew32.lib;devil.lib;ilu.lib;ilut.lib;cbmath.lib;freeglutd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>@echo off
+xcopy "$(DEV_SDK_DIR)bin\$(PlatformTarget)\*.dll" "$(OutDir)" /y
+xcopy "$(DEV_SDK_DIR)bin\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\*.dll" "$(OutDir)" /y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_CONSOLE;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\source\$(ProjectName);$(ProjectDir)..\..\..\include;$(ProjectDir)..\..\..\thirdparty\include;$(DEV_SDK_DIR)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\lib\$(PlatformTarget)\$(PlatformToolset)\$(Configuration);$(ProjectDir)..\..\..\thirdparty\lib\$(PlatformTarget);$(ProjectDir)..\..\..\thirdparty\lib\$(PlatformTarget)\$(PlatformToolset)\$(Configuration);$(DEV_SDK_DIR)lib\$(PlatformTarget);$(DEV_SDK_DIR)lib\$(PlatformTarget)\$(PlatformToolset)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>egpLib.lib;opengl32.lib;glew32.lib;devil.lib;ilu.lib;ilut.lib;cbmath.lib;freeglutd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>@echo off
+xcopy "$(DEV_SDK_DIR)bin\$(PlatformTarget)\*.dll" "$(OutDir)" /y
+xcopy "$(DEV_SDK_DIR)bin\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\*.dll" "$(OutDir)" /y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_CONSOLE;NDEBUG;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\source\$(ProjectName);$(ProjectDir)..\..\..\include;$(ProjectDir)..\..\..\thirdparty\include;$(DEV_SDK_DIR)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>No</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\lib\$(PlatformTarget)\$(PlatformToolset)\$(Configuration);$(ProjectDir)..\..\..\thirdparty\lib\$(PlatformTarget);$(ProjectDir)..\..\..\thirdparty\lib\$(PlatformTarget)\$(PlatformToolset)\$(Configuration);$(DEV_SDK_DIR)lib\$(PlatformTarget);$(DEV_SDK_DIR)lib\$(PlatformTarget)\$(PlatformToolset)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>egpLib.lib;opengl32.lib;glew32.lib;devil.lib;ilu.lib;ilut.lib;cbmath.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>@echo off
+xcopy "$(DEV_SDK_DIR)bin\$(PlatformTarget)\*.dll" "$(OutDir)" /y
+xcopy "$(DEV_SDK_DIR)bin\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\*.dll" "$(OutDir)" /y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_CONSOLE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\source\$(ProjectName);$(ProjectDir)..\..\..\include;$(ProjectDir)..\..\..\thirdparty\include;$(DEV_SDK_DIR)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>No</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\..\lib\$(PlatformTarget)\$(PlatformToolset)\$(Configuration);$(ProjectDir)..\..\..\thirdparty\lib\$(PlatformTarget);$(ProjectDir)..\..\..\thirdparty\lib\$(PlatformTarget)\$(PlatformToolset)\$(Configuration);$(DEV_SDK_DIR)lib\$(PlatformTarget);$(DEV_SDK_DIR)lib\$(PlatformTarget)\$(PlatformToolset)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>egpLib.lib;opengl32.lib;glew32.lib;devil.lib;ilu.lib;ilut.lib;cbmath.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>@echo off
+xcopy "$(DEV_SDK_DIR)bin\$(PlatformTarget)\*.dll" "$(OutDir)" /y
+xcopy "$(DEV_SDK_DIR)bin\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\*.dll" "$(OutDir)" /y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_collisions.cpp" />
+    <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_main.cpp" />
+    <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_mover.cpp" />
+    <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_spritecontroller.cpp" />
+    <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\resource\tex\bg\bg_clouds.png" />
+    <Image Include="..\..\..\resource\tex\bg\sky_clouds.png" />
+    <Image Include="..\..\..\resource\tex\bg\sky_water.png" />
+    <Image Include="..\..\..\resource\tex\box\box_dm.png" />
+    <Image Include="..\..\..\resource\tex\box\box_nm.png" />
+    <Image Include="..\..\..\resource\tex\box\box_sm.png" />
+    <Image Include="..\..\..\resource\tex\earth\2k\earth_cm_2k.png" />
+    <Image Include="..\..\..\resource\tex\earth\2k\earth_dm_2k.png" />
+    <Image Include="..\..\..\resource\tex\earth\2k\earth_hm_2k.png" />
+    <Image Include="..\..\..\resource\tex\earth\2k\earth_lm_2k.png" />
+    <Image Include="..\..\..\resource\tex\earth\2k\earth_nm_2k.png" />
+    <Image Include="..\..\..\resource\tex\earth\2k\earth_sm_2k.png" />
+    <Image Include="..\..\..\resource\tex\sprite\celRamp_dm.png" />
+    <Image Include="..\..\..\resource\tex\sprite\celRamp_sm.png" />
+    <Image Include="..\..\..\resource\tex\sprite\spriteTest.png" />
+    <Image Include="..\..\..\resource\tex\sprite\spriteTest8x8.png" />
+    <Image Include="..\..\..\resource\tex\stone\stone_dm.png" />
+    <Image Include="..\..\..\resource\tex\stone\stone_hm.png" />
+    <Image Include="..\..\..\resource\tex\stone\stone_nm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_axesdata.h" />
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_collisions.h" />
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_cubedata.h" />
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_mover.h" />
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_primitivedata.h" />
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_simplespheredata.h" />
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_simplesquaredata.h" />
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_spherehighresdata.h" />
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_spherelowresdata.h" />
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_spritecontroller.h" />
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_squaredata.h" />
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\resource\glsl\450\applyTransform_vs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\celGoochShading_fs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\celShading_fs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\doSpriteUVs_vs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\drawAttribs_fs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\drawColorAttrib_fs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\drawColor_fs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\drawSolidColor_fs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\drawTexture_fs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\goochShading_fs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\passAttribs_vs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\passColorAttrib_vs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\passColor_vs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\passTexcoord_vs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\passThru_fs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\passThru_vs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\phongShading_fs.glsl" />
+    <None Include="..\..\..\resource\glsl\450\phongShading_vs.glsl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

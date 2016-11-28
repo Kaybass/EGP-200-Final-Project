@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "egpDemo_freeglut", "..\..\egpDemo_freeglut\egpDemo_freeglut.vcxproj", "{F5A92F5F-F964-47D6-83B4-3802F1B44AC3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BD346E5B-45FD-40A9-BE4B-F159598AFC69} = {BD346E5B-45FD-40A9-BE4B-F159598AFC69}
+	EndProjectSection
+	GlobalSection(HgVSProperties) = preSolution
+		SolutionIsControlled = True
+		SolutionBindings = <Solution Location In Database>
+	EndGlobalSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "egpLib", "..\..\egpLib\egpLib.vcxproj", "{BD346E5B-45FD-40A9-BE4B-F159598AFC69}"
+	GlobalSection(HgVSProperties) = preSolution
+		SolutionIsControlled = True
+		SolutionBindings = <Solution Location In Database>
+	EndGlobalSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5A92F5F-F964-47D6-83B4-3802F1B44AC3}.Debug|x64.ActiveCfg = Debug|x64
+		{F5A92F5F-F964-47D6-83B4-3802F1B44AC3}.Debug|x64.Build.0 = Debug|x64
+		{F5A92F5F-F964-47D6-83B4-3802F1B44AC3}.Debug|x86.ActiveCfg = Debug|Win32
+		{F5A92F5F-F964-47D6-83B4-3802F1B44AC3}.Debug|x86.Build.0 = Debug|Win32
+		{F5A92F5F-F964-47D6-83B4-3802F1B44AC3}.Release|x64.ActiveCfg = Release|x64
+		{F5A92F5F-F964-47D6-83B4-3802F1B44AC3}.Release|x64.Build.0 = Release|x64
+		{F5A92F5F-F964-47D6-83B4-3802F1B44AC3}.Release|x86.ActiveCfg = Release|Win32
+		{F5A92F5F-F964-47D6-83B4-3802F1B44AC3}.Release|x86.Build.0 = Release|Win32
+		{BD346E5B-45FD-40A9-BE4B-F159598AFC69}.Debug|x64.ActiveCfg = Debug|x64
+		{BD346E5B-45FD-40A9-BE4B-F159598AFC69}.Debug|x64.Build.0 = Debug|x64
+		{BD346E5B-45FD-40A9-BE4B-F159598AFC69}.Debug|x86.ActiveCfg = Debug|Win32
+		{BD346E5B-45FD-40A9-BE4B-F159598AFC69}.Debug|x86.Build.0 = Debug|Win32
+		{BD346E5B-45FD-40A9-BE4B-F159598AFC69}.Release|x64.ActiveCfg = Release|x64
+		{BD346E5B-45FD-40A9-BE4B-F159598AFC69}.Release|x64.Build.0 = Release|x64
+		{BD346E5B-45FD-40A9-BE4B-F159598AFC69}.Release|x86.ActiveCfg = Release|Win32
+		{BD346E5B-45FD-40A9-BE4B-F159598AFC69}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(HgVSProperties) = preSolution
+		SolutionIsControlled = True
+		SolutionBindings = <Solution Location In Database>
+	EndGlobalSection
+EndGlobal
