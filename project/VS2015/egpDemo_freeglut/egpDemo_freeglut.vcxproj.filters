@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Resource Files\tex">
+      <UniqueIdentifier>{0029e626-e06a-4788-af3c-119214e40cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\tex\bg">
+      <UniqueIdentifier>{72ade22d-bd31-44b6-bc3e-48ec0b11ae6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\tex\box">
+      <UniqueIdentifier>{7efc77dc-e3f4-4b49-b26b-9edcda5ca80e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\tex\earth">
+      <UniqueIdentifier>{66a4de37-5b00-4eca-a9e3-82d4eafae7d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\tex\stone">
+      <UniqueIdentifier>{126c3921-8718-4e9a-a90b-378baf0c2a09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\tex\earth\2k">
+      <UniqueIdentifier>{f2342b9b-a668-4c06-a746-f3884f0f84ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\glsl">
+      <UniqueIdentifier>{dd9a9ca2-bff6-478c-8757-08e26574a125}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\glsl\450">
+      <UniqueIdentifier>{d2ce12aa-318d-4cad-bccd-41869203a1a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\tex\sprite">
+      <UniqueIdentifier>{3b913e26-4270-447c-a752-9a78de75d260}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_spritecontroller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_mover.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_collisions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\resource\tex\bg\bg_clouds.png">
+      <Filter>Resource Files\tex\bg</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\bg\sky_clouds.png">
+      <Filter>Resource Files\tex\bg</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\bg\sky_water.png">
+      <Filter>Resource Files\tex\bg</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\box\box_dm.png">
+      <Filter>Resource Files\tex\box</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\box\box_nm.png">
+      <Filter>Resource Files\tex\box</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\box\box_sm.png">
+      <Filter>Resource Files\tex\box</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\earth\2k\earth_cm_2k.png">
+      <Filter>Resource Files\tex\earth\2k</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\earth\2k\earth_dm_2k.png">
+      <Filter>Resource Files\tex\earth\2k</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\earth\2k\earth_hm_2k.png">
+      <Filter>Resource Files\tex\earth\2k</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\earth\2k\earth_lm_2k.png">
+      <Filter>Resource Files\tex\earth\2k</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\earth\2k\earth_nm_2k.png">
+      <Filter>Resource Files\tex\earth\2k</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\earth\2k\earth_sm_2k.png">
+      <Filter>Resource Files\tex\earth\2k</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\stone\stone_dm.png">
+      <Filter>Resource Files\tex\stone</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\stone\stone_hm.png">
+      <Filter>Resource Files\tex\stone</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\stone\stone_nm.png">
+      <Filter>Resource Files\tex\stone</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\sprite\spriteTest.png">
+      <Filter>Resource Files\tex\sprite</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\sprite\spriteTest8x8.png">
+      <Filter>Resource Files\tex\sprite</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\sprite\celRamp_dm.png">
+      <Filter>Resource Files\tex\sprite</Filter>
+    </Image>
+    <Image Include="..\..\..\resource\tex\sprite\celRamp_sm.png">
+      <Filter>Resource Files\tex\sprite</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_cubedata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_squaredata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_primitivedata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_axesdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_spritecontroller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_simplesquaredata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_simplespheredata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_spherelowresdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_spherehighresdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_mover.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_collisions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\resource\glsl\450\passThru_vs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\drawColor_fs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\passColor_vs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\passThru_fs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\passAttribs_vs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\drawAttribs_fs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\passTexcoord_vs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\drawTexture_fs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\doSpriteUVs_vs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\phongShading_vs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\phongShading_fs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\celShading_fs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\goochShading_fs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\celGoochShading_fs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\applyTransform_vs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\drawSolidColor_fs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\passColorAttrib_vs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+    <None Include="..\..\..\resource\glsl\450\drawColorAttrib_fs.glsl">
+      <Filter>Resource Files\glsl\450</Filter>
+    </None>
+  </ItemGroup>
+</Project>
