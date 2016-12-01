@@ -46,7 +46,7 @@ int win_w = 1280;
 int win_h = 720;
 int win_handle;
 float win_aspect;
-const char *win_name = "EGP Graphics Demo Window - D. Buckstein";
+const char *win_name = "Boingo's Big Bingo Bango";
 const char win_close = 27;	// escape key closes window
 
 // frame rate and timing
@@ -91,15 +91,6 @@ unsigned int testCubeWireIBO = 0;
 unsigned int drawAttribColorProgram = 0;
 unsigned int drawSolidColorProgram = 0;
 
-/*
-unsigned int drawTextureProgram = 0;
-
-unsigned int phongShadingProgram = 0;
-unsigned int celShadingProgram = 0;
-unsigned int goochShadingProgram = 0;
-unsigned int celGoochShadingProgram = 0;
-*/
-
 
 // uniform handles
 unsigned int drawAttribColor_mvp = 0;
@@ -109,17 +100,6 @@ unsigned int drawSolidColor_mvp = 0, drawSolidColor_color = 0;
 const float redTrans[4] = { 1.0f, 0.0f, 0.0f, 0.5f };
 const float greenTrans[4] = { 0.0f, 1.0f, 0.0f, 0.5f };
 const float blueTrans[4] = { 0.0f, 0.0f, 1.0f, 0.5f };
-
-
-/*
-int drawTexture_mvp = 0;
-
-int phongShading_mvp = 0, phongShading_lightPos = 0, phongShading_lightCol = 0, phongShading_eyePos = 0;
-int celShading_mvp = 0, celShading_lightPos = 0, celShading_eyePos = 0;
-int goochShading_mvp = 0, goochShading_lightPos = 0, goochShading_eyePos = 0;
-int celGoochShading_mvp = 0, celGoochShading_lightPos = 0, celGoochShading_eyePos = 0;
-*/
-
 
 
 // general: camera's view matrix and projection matrix
@@ -135,29 +115,6 @@ int mouseX = 0, mouseY = 0, lastMouseX = 0, lastMouseY = 0, deltaMouseX = 0, del
 int keyRight = 0, keyLeft = 0, keyUp = 0, keyDown = 0, keyFwd = 0, keyBack = 0;
 
 
-/*
-// light positions and colors
-const unsigned int numLights = 3;
-cbtk::cbmath::vec4 lightPosWorld[numLights];
-const cbtk::cbmath::vec4 lightOffset[numLights] = {
-	cbtk::cbmath::vec4(50.0f, 20.0f, 50.0f, 0.0f), 
-	cbtk::cbmath::vec4(-50.0f, 20.0f, 50.0f, 0.0f), 
-	cbtk::cbmath::vec4(50.0f, -20.0f, -50.0f, 0.0f)
-};
-
-// light and camera position to be calculated in object space
-cbtk::cbmath::vec4 cameraPosObj;
-cbtk::cbmath::vec4 lightPosObj[numLights];
-
-// light colors
-cbtk::cbmath::vec4 lightCol[numLights] = {
-	cbtk::cbmath::vec4(1.0f),						// white
-	cbtk::cbmath::vec4(1.0f, 0.5, 0.0f, 1.0f),		// orange
-	cbtk::cbmath::vec4(0.0f, 0.5f, 1.0f, 1.0f)		// blue
-};
-*/
-
-
 // transforms
 cbtk::cbmath::mat4	sphereModelMatrix0, sphereModelMatrixInv0, sphereModelViewProjectionMatrix0, 
 					sphereModelMatrix1, sphereModelMatrixInv1, sphereModelViewProjectionMatrix1,
@@ -171,41 +128,6 @@ demo::SBV sphereSBV0, sphereSBV1;
 demo::BBV cubeAABV0, cubeAABV1;
 
 bool sphere0intersect = false, sphere1intersect = false, cube0intersect = false, cube1intersect = false;
-
-
-/*
-// cube model transformation in world space, and fully-concatenated matrix for cube
-// we'll use it as a skybox, so no more model matrix
-cbtk::cbmath::mat4 cubeViewMatrix, cubeViewProjectionMatrix;
-
-// square model and model-view-projection
-cbtk::cbmath::mat4 squareModelMatrix, squareModelMatrixInv, squareModelViewProjectionMatrix;
-
-// transforms for spheres
-cbtk::cbmath::mat4 sphereLoResModelMatrix, sphereLoResModelMatrixInv, sphereLoResModelViewProjectionMatrix;
-cbtk::cbmath::mat4 sphereHiResModelMatrix, sphereHiResModelMatrixInv, sphereHiResModelViewProjectionMatrix;
-float sphereTilt = Deg2Rad(23.5f);
-float sphereRotate = 0.0f;
-float sphereLoResHt = 0.0f;
-float sphereHiResHt = 0.0f;
-*/
-
-
-/*
-// textures:
-
-// skybox
-unsigned int skyboxHandle = 0;
-
-// earth
-unsigned int earthHandle_dm = 0;
-unsigned int earthHandle_sm = 0;
-
-// cel-shading map
-unsigned int celRampHandle_dm = 0;
-unsigned int celRampHandle_sm = 0;
-*/
-
 
 
 //-----------------------------------------------------------------------------
@@ -249,20 +171,6 @@ void loadGeometry()
 	testSphereHiResVAO = demo::createVAO(demo::sphere32x24vertexCount, 3, allSphereHiResAttribData, testGeomAttribs, &testSphereHiResInterleavedVBO);
 
 //-----------------------------------------------------------------------------
-/*
-	// SETUP INDEXED CUBE VAO, VBO AND IBO
-	const float *allCubeAttribDataIndexed[] = { (float*)(demo::cubeVertIndexed) };//, (float *)(demo::cubeNormIndexed), (float*)(demo::cubeTexcoordIndexed) };
-	testCubeVAO = demo::createIndexedVAO(
-		demo::simpleCubeVertexCountIndexed, demo::simpleCubeIndexCount, 
-		1, allCubeAttribDataIndexed, testGeomAttribs, demo::cubeIndices, 
-		&testCubeInterleavedVBO, &testCubeIBO);
-
-	const float *allCubeWireAttribDataIndexed[] = { (float *)(demo::cubeVertices) };
-	testCubeWireVAO = demo::createIndexedVAO(
-		demo::simpleCubeVertexCountWireIndexed, demo::simpleCubeIndexCountWire,
-		1, allCubeWireAttribDataIndexed, testGeomAttribs, demo::cubeIndicesWire, 
-		&testCubeWireInterleavedVBO, &testCubeWireIBO);
-*/
 }
 
 void deleteGeometry()
@@ -353,137 +261,6 @@ void loadShaderPrograms()
 	drawSolidColor_color = glGetUniformLocation(drawSolidColorProgram, "solidColor");
 
 
-/*
-	// texture visualization & sprite program
-	{
-		// FRAGMENT SHADER WILL BE USED IN BOTH PROGRAMS... LOAD ONCE
-		fsFile = demo::loadFile("../../../../resource/glsl/450/drawTexture_fs.glsl");
-		fsHandle = demo::createShaderfromSource(fsFile.str, GL_FRAGMENT_SHADER);
-
-		// texture visualization
-		{
-			// create vertex shader
-			vsFile = demo::loadFile("../../../../resource/glsl/450/passTexcoord_vs.glsl");
-			vsHandle = demo::createShaderfromSource(vsFile.str, GL_VERTEX_SHADER);
-
-			// configure program
-			drawTextureProgram = demo::createProgram();
-			demo::attachShaderToProgram(drawTextureProgram, vsHandle);
-			demo::attachShaderToProgram(drawTextureProgram, fsHandle);
-			demo::linkProgram(drawTextureProgram);
-			demo::validateProgram(drawTextureProgram);
-
-			demo::deleteShader(vsHandle);
-			demo::unloadFile(&vsFile);
-		}
-
-		// done with shared shader object
-		demo::deleteShader(fsHandle);
-		demo::unloadFile(&fsFile);
-	}
-
-	// lighting
-	{
-		// VERTEX SHADER WILL BE USED IN BOTH PROGRAMS... LOAD ONCE
-		vsFile = demo::loadFile("../../../../resource/glsl/450/phongShading_vs.glsl");
-		vsHandle = demo::createShaderfromSource(vsFile.str, GL_VERTEX_SHADER);
-
-		// phong shading
-		{
-			fsFile = demo::loadFile("../../../../resource/glsl/450/phongShading_fs.glsl");
-			fsHandle = demo::createShaderfromSource(fsFile.str, GL_FRAGMENT_SHADER);
-
-			phongShadingProgram = demo::createProgram();
-			demo::attachShaderToProgram(phongShadingProgram, vsHandle);
-			demo::attachShaderToProgram(phongShadingProgram, fsHandle);
-			demo::linkProgram(phongShadingProgram);
-			demo::validateProgram(phongShadingProgram);
-
-			demo::deleteShader(fsHandle);
-			demo::unloadFile(&fsFile);
-		}
-
-		// cel shading
-		{
-			fsFile = demo::loadFile("../../../../resource/glsl/450/celShading_fs.glsl");
-			fsHandle = demo::createShaderfromSource(fsFile.str, GL_FRAGMENT_SHADER);
-
-			celShadingProgram = demo::createProgram();
-			demo::attachShaderToProgram(celShadingProgram, vsHandle);
-			demo::attachShaderToProgram(celShadingProgram, fsHandle);
-			demo::linkProgram(celShadingProgram);
-			demo::validateProgram(celShadingProgram);
-
-			demo::deleteShader(fsHandle);
-			demo::unloadFile(&fsFile);
-		}
-
-		// gooch shading
-		{
-			fsFile = demo::loadFile("../../../../resource/glsl/450/goochShading_fs.glsl");
-			fsHandle = demo::createShaderfromSource(fsFile.str, GL_FRAGMENT_SHADER);
-
-			goochShadingProgram = demo::createProgram();
-			demo::attachShaderToProgram(goochShadingProgram, vsHandle);
-			demo::attachShaderToProgram(goochShadingProgram, fsHandle);
-			demo::linkProgram(goochShadingProgram);
-			demo::validateProgram(goochShadingProgram);
-
-			demo::deleteShader(fsHandle);
-			demo::unloadFile(&fsFile);
-		}
-
-		// cel-gooch shading combo
-		{
-			fsFile = demo::loadFile("../../../../resource/glsl/450/celGoochShading_fs.glsl");
-			fsHandle = demo::createShaderfromSource(fsFile.str, GL_FRAGMENT_SHADER);
-
-			celGoochShadingProgram = demo::createProgram();
-			demo::attachShaderToProgram(celGoochShadingProgram, vsHandle);
-			demo::attachShaderToProgram(celGoochShadingProgram, fsHandle);
-			demo::linkProgram(celGoochShadingProgram);
-			demo::validateProgram(celGoochShadingProgram);
-
-			demo::deleteShader(fsHandle);
-			demo::unloadFile(&fsFile);
-		}
-
-		demo::deleteShader(vsHandle);
-		demo::unloadFile(&vsFile);
-	}
-
-
-
-	// get uniform locations
-	// (-1 means uniform is not used... not a bad thing, just won't do anything)
-
-	drawTexture_mvp = glGetUniformLocation(drawTextureProgram, "mvp");
-	
-	phongShading_mvp = glGetUniformLocation(phongShadingProgram, "mvp");
-	phongShading_lightPos = glGetUniformLocation(phongShadingProgram, "lightPos");
-	phongShading_eyePos = glGetUniformLocation(phongShadingProgram, "eyePos");
-
-	celShading_mvp = glGetUniformLocation(celShadingProgram, "mvp");
-	celShading_lightPos = glGetUniformLocation(celShadingProgram, "lightPos");
-	celShading_eyePos = glGetUniformLocation(celShadingProgram, "eyePos");
-
-	goochShading_mvp = glGetUniformLocation(goochShadingProgram, "mvp");
-	goochShading_lightPos = glGetUniformLocation(goochShadingProgram, "lightPos");
-	goochShading_eyePos = glGetUniformLocation(goochShadingProgram, "eyePos");
-
-	celGoochShading_mvp = glGetUniformLocation(celGoochShadingProgram, "mvp");
-	celGoochShading_lightPos = glGetUniformLocation(celGoochShadingProgram, "lightPos");
-	celGoochShading_eyePos = glGetUniformLocation(celGoochShadingProgram, "eyePos");
-
-
-	// send constant uniforms
-	// light colors don't change so why not send them here
-	phongShading_lightCol = glGetUniformLocation(phongShadingProgram, "lightCol");
-	demo::activateProgram(phongShadingProgram);
-	glUniform4fv(phongShading_lightCol, numLights, (float *)lightCol);
-*/
-
-
 	// done
 	demo::activateProgram(0);
 }
@@ -492,71 +269,13 @@ void deleteShaderPrograms()
 {
 	demo::deleteProgram(drawAttribColorProgram);
 	demo::deleteProgram(drawSolidColorProgram);
-
-/*
-	demo::deleteProgram(drawTextureProgram);
-
-	demo::deleteProgram(phongShadingProgram);
-	demo::deleteProgram(celShadingProgram);
-	demo::deleteProgram(goochShadingProgram);
-	demo::deleteProgram(celGoochShadingProgram);
-*/
 }
 
 
 // load and delete textures
 void loadTextures()
 {
-/*
-	// skybox
-	skyboxHandle = ilutGLLoadImage("../../../../resource/tex/bg/sky_clouds.png");
 
-	// here we can change the texture settings: 
-	//	1. smoothing: do we want it to appear 
-	//		rough/pixelated (GL_NEAREST) or smooth (GL_LINEAR)?
-	//	2. do we want it to repeat (GL_REPEAT) 
-	//		or clamp to the edges (GL_CLAMP) if texcoords are 
-	//		less than 0 or greater than 1?
-	glBindTexture(GL_TEXTURE_2D, skyboxHandle);							// activate 2D texture
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);	// texture gets large, smooth
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	// texture gets small, smooth
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);		// texture repeats on horiz axis
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);		// texture repeats on vert axis
-
-
-	// earth textures
-	earthHandle_dm = ilutGLLoadImage("../../../../resource/tex/earth/2k/earth_dm_2k.png");
-	earthHandle_sm = ilutGLLoadImage("../../../../resource/tex/earth/2k/earth_sm_2k.png");
-
-	glBindTexture(GL_TEXTURE_2D, earthHandle_dm);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);	// these two are deliberately different
-
-	glBindTexture(GL_TEXTURE_2D, earthHandle_sm);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-
-	// value clamp map for cel-shading
-	celRampHandle_dm = ilutGLLoadImage("../../../../resource/tex/sprite/celRamp_dm.png");
-	celRampHandle_sm = ilutGLLoadImage("../../../../resource/tex/sprite/celRamp_sm.png");
-
-	glBindTexture(GL_TEXTURE_2D, celRampHandle_dm);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-	glBindTexture(GL_TEXTURE_2D, celRampHandle_sm);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-*/
 
 
 	glBindTexture(GL_TEXTURE_2D, 0);									// deactivate 2D texture
@@ -564,15 +283,6 @@ void loadTextures()
 
 void deleteTextures()
 {
-/*
-	iluDeleteImage(skyboxHandle);
-
-	iluDeleteImage(earthHandle_dm);
-	iluDeleteImage(earthHandle_sm);
-
-	iluDeleteImage(celRampHandle_dm);
-	iluDeleteImage(celRampHandle_sm);
-*/
 }
 
 
@@ -717,23 +427,6 @@ void update(float dt)
 	viewProjMat = projectionMatrix * viewMatrix;
 
 
-/*
-	// SKYBOX TRANSFORM: 
-	// easy way: exact same as the camera's transform (view), but 
-	//	we remove the translation (which makes the background seem 
-	//	infinitely far away), and scale up instead
-	cubeViewMatrix = viewMatrix;
-	cubeViewMatrix.c3.set(0.0f, 0.0f, 0.0f, 1.0f);
-	cubeViewMatrix = cubeViewMatrix * cbtk::cbmath::makeScale4(50.0f);
-
-
-	// update light positions (keep one of them attached to the skybox)
-	lightPosWorld[0] = lightOffset[0] + cameraPosWorld;
-	lightPosWorld[1] = lightOffset[1];
-	lightPosWorld[2] = lightOffset[2];
-*/
-
-
 	// update control
 	if (playing)
 	{
@@ -764,24 +457,6 @@ void update(float dt)
 		aabvTest = demo::testCollisionBBVvsBBV(&cubeAABV0, &cubeAABV1);
 		cube0intersect = cube1intersect = (aabvTest.bvtA != demo::BVT_NONE);
 
-
-/*
-		// apply rotation to spheres' transforms
-		sphereRotate += dt;
-		sphereLoResHt = cosf(sphereRotate);
-		sphereHiResHt = sinf(sphereRotate);
-
-		// calculate rotation, shift over on x and apply height on y
-		sphereLoResModelMatrix = cbtk::cbmath::makeRotationEuler4ZYX(sphereRotate, sphereRotate, sphereRotate);
-		sphereLoResModelMatrix.c3.x = 5.0f;
-		sphereLoResModelMatrix.c3.y = sphereLoResHt;
-		sphereLoResModelMatrixInv = cbtk::cbmath::transformInverseNoScale(sphereLoResModelMatrix);
-
-		// make it spin like the earth
-		sphereHiResModelMatrix = cbtk::cbmath::makeRotationEuler4ZYX(0.0f, sphereRotate, sphereTilt);
-		sphereHiResModelMatrix.c3.x = 2.5f;
-		sphereHiResModelMatrixInv = cbtk::cbmath::transformInverseNoScale(sphereHiResModelMatrix);
-*/
 
 	}
 }
@@ -874,126 +549,6 @@ void render()
 	
 //-----------------------------------------------------------------------------
 
-
-/*
-//-----------------------------------------------------------------------------
-// SKYBOX: 
-
-	// use simple texturing program
-	demo::activateProgram(drawTextureProgram);
-
-	// bind skybox texture 
-	//	(won't matter if we're not using a program that uses it...)
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, skyboxHandle);
-
-	// send skybox transform
-	cubeViewProjectionMatrix = projectionMatrix * cubeViewMatrix;
-	glUniformMatrix4fv(0, 1, 0, cubeViewProjectionMatrix.m);
-
-	// draw skybox - flip culling
-	glCullFace(GL_FRONT);
-	demo::drawVAO(36, GL_TRIANGLES, testCubeVAO);
-	glCullFace(GL_BACK);
-
-	// alternatively draw indexed
-//	demo::drawIndexedVAO(36, GL_TRIANGLES, GL_UNSIGNED_INT, testCubeVAO);
-
-
-
-//-----------------------------------------------------------------------------
-// DRAWING SCENE OBJECTS 
-// first, activate program and textures
-
-
-	// ACTIVATE SHADER PROGRAM
-//	demo::activateProgram(drawTextureProgram);
-	demo::activateProgram(phongShadingProgram);
-//	demo::activateProgram(celShadingProgram);
-//	demo::activateProgram(goochShadingProgram);
-//	demo::activateProgram(celGoochShadingProgram);
-
-
-	// change texture
-	// if you want to use a different texture for each object, 
-	//	need to do this whenever this texture (slot 0) should change
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, earthHandle_dm);
-
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, earthHandle_sm);
-
-
-	// activate our "cel-shading map": called a RAMP
-	// this way we can avoid if-statements in our shader
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, celRampHandle_dm);
-	glActiveTexture(GL_TEXTURE3);
-	glBindTexture(GL_TEXTURE_2D, celRampHandle_sm);
-
-
-
-//-----------------------------------------------------------------------------
-// FLOATING SPHERES: 
-// may need to update stuff depending on which space lighting happens in...
-
-	// update transform and send via uniform
-	sphereLoResModelViewProjectionMatrix = viewProjMat * sphereLoResModelMatrix;
-	glUniformMatrix4fv(0, 1, 0, sphereLoResModelViewProjectionMatrix.m);
-
-	// LIGHTING: fastest if in object-space (local to object)
-	// update light positions in object space
-	for (unsigned int i = 0; i < numLights; ++i)
-		lightPosObj[i] = sphereLoResModelMatrixInv * lightPosWorld[i];
-
-	// send light positions in object space
-	glUniform4fv(phongShading_lightPos, numLights, (float *)lightPosObj);
-
-	// update and send eye position in object space
-	cameraPosObj = sphereLoResModelMatrixInv * cameraPosWorld;
-	glUniform4fv(phongShading_eyePos, 1, cameraPosObj.v);
-
-	// draw
-	demo::drawVAO(demo::sphere8x6vertexCount, GL_TRIANGLES, testSphereLoResVAO);
-
-
-	// hi-res
-	sphereHiResModelViewProjectionMatrix = viewProjMat * sphereHiResModelMatrix;
-	glUniformMatrix4fv(0, 1, 0, sphereHiResModelViewProjectionMatrix.m);
-
-	// lights
-	for (unsigned int i = 0; i < numLights; ++i)
-		lightPosObj[i] = sphereHiResModelMatrixInv * lightPosWorld[i];
-	glUniform4fv(phongShading_lightPos, numLights, (float *)lightPosObj);
-
-	// camera
-	cameraPosObj = sphereHiResModelMatrixInv * cameraPosWorld;
-	glUniform4fv(phongShading_eyePos, 1, cameraPosObj.v);
-
-	// action
-	demo::drawVAO(demo::sphere32x24vertexCount, GL_TRIANGLES, testSphereHiResVAO);
-
-
-
-//-----------------------------------------------------------------------------
-// SIMPLE SQUARE USING SAME SHADER: 
-
-
-	squareModelViewProjectionMatrix = viewProjMat * squareModelMatrix;
-	glUniformMatrix4fv(0, 1, 0, squareModelViewProjectionMatrix.m);
-
-	for (unsigned int i = 0; i < numLights; ++i)
-		lightPosObj[i] = squareModelMatrixInv * lightPosWorld[i];
-	glUniform4fv(phongShading_lightPos, numLights, (float *)lightPosObj);
-
-	cameraPosObj = squareModelMatrixInv * cameraPosWorld;
-	glUniform4fv(phongShading_eyePos, 1, cameraPosObj.v);
-
-	demo::drawVAO(demo::simpleSquareVertexCount, GL_TRIANGLE_STRIP, testSquareVAO);
-
-
-//-----------------------------------------------------------------------------
-*/
 
 	// disable or reset all states
 	demo::activateProgram(0);
