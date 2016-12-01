@@ -34,6 +34,12 @@
 // third party math lib
 #include "cbmath/cbtkMatrix.h"
 
+//Constants
+#define BOINGO_SPEEDO cbmath::vec3(1.0f, 0.0f, 0.0f)
+#define BOINGO_DRAG   cbmath::vec4(0.1f, 0.0f, 0.0f, 0.0f)
+
+#define BONGO_ACCEL   cbmath::vec3(1.12f,0.0f,0.0f)
+
 
 
 //-----------------------------------------------------------------------------
@@ -282,7 +288,7 @@ void resetPhysics(int playFlag)
 
 
 	cube0 = demo::createMover(
-		cbmath::vec3(-2.0f, -2.0f, 0.02f), cbmath::vec3(1.0f,0.0f,0.0f), cbmath::v3zero, 1.0f, &cubeModelMatrix0);
+		cbmath::vec3(-2.0f, -2.0f, 0.02f), BONGO_ACCEL, cbmath::v3zero, 1.0f, &cubeModelMatrix0);
 	
 	cube1 = demo::createMover(
 		cbmath::vec3(+2.0f, -2.0f, 0.03f), cbmath::v3zero, cbmath::v3zero, 1.0f, &cubeModelMatrix1);
@@ -390,12 +396,16 @@ void update(float dt)
 
 
 	// camera
-	updateCameraControlled(dt);
+	//updateCameraControlled(dt);
 //	updateCameraOrbit(dt);
+
+
 
 	viewMatrix.c3 = cameraPosWorld;
 	viewMatrix = cbtk::cbmath::transformInverseNoScale(viewMatrix);
 	viewProjMat = projectionMatrix * viewMatrix;
+
+	
 
 
 	// update control
@@ -405,9 +415,14 @@ void update(float dt)
 
 		//demo::setVelocity(&cube0,cbmath::vec3(0.01f,0.0f,0.0f));
 
+		//apply drag
+		cube1.velocity = cube1.velocity -  BOINGO_DRAG;
+
 		demo::updateMoverEuler(&cube0, dt);
 		demo::updateMoverEuler(&cube1, dt);
 
+		
+		cameraPosWorld = cube1.position + cbmath::vec4(0.0f, 2.0f, cameraDistance, 1.0f);
 
 		// update colliders
 
@@ -421,10 +436,20 @@ void update(float dt)
 
 		// update collision checks
 		demo::Collision ssbvTest, aabvTest;
-
-
 		aabvTest = demo::testCollisionBBVvsBBV(&cubeAABV0, &cubeAABV1);
 		cube0intersect = cube1intersect = (aabvTest.bvtA != demo::BVT_NONE);
+
+		if (cube0intersect) {
+			cube0intersect = cube1intersect = false;
+
+			cameraPosWorld = cbmath::vec4(0.0f, 0.0f, cameraDistance, 1.0f);
+
+			printf("\nGame Over, you earned %d punty\n", punty);
+
+			punty = 0;
+
+			resetPhysics(0);
+		}
 
 
 	}
@@ -447,15 +472,6 @@ void render()
 	//	- bind texture we want to apply (skybox)
 	//	- send appropriate uniforms if different from last time we used this program
 	//	- call appropriate draw function, based on whether we are indexed or not
-
-
-//-----------------------------------------------------------------------------
-// AXES: 
-
-	// just activate the color attrib program, send vp mat and draw as lines
-	demo::activateProgram(drawAttribColorProgram);
-	glUniformMatrix4fv(drawAttribColor_mvp, 1, 0, viewProjMat.m);
-
 
 
 
@@ -608,22 +624,7 @@ void onKeyboard(unsigned char key, int x, int y)
 		case 's':
 			keyBack = 1;
 			break;
-		case 'Z':
-		case 'z':
-			//move boingo
-			if (!playing)
-				playing = true;
-			demo::addPosition(&cube1, cbmath::vec3(1.0f, 0.0f, 0.0f));
-			punty++;
-			break;
-		case 'X':
-		case 'x':
-			//move boingo
-			if (!playing)
-				playing = true;
-			demo::addPosition(&cube1, cbmath::vec3(1.0f, 0.0f, 0.0f));
-			punty++;
-			break;
+		
 		}
 	}
 	else
@@ -668,6 +669,24 @@ void onKeyboardUp(unsigned char key, int x, int y)
 		case 'S':
 		case 's':
 			keyBack = 0;
+			break;
+		case 'Z':
+		case 'z':
+			//move boingo
+			if (!playing)
+				playing = true;
+			demo::addVelocity(&cube1, BOINGO_SPEEDO);
+			//cameraPosWorld = cameraPosWorld + cbmath::vec4(1.0f,0.0f, 0.0f, 0.0f);
+			punty++;
+			break;
+		case 'X':
+		case 'x':
+			//move boingo
+			if (!playing)
+				playing = true;
+			demo::addVelocity(&cube1, BOINGO_SPEEDO);
+			//cameraPosWorld = cameraPosWorld + cbmath::vec4(1.0f, 0.0f, 0.0f, 0.0f);
+			punty++;
 			break;
 		}
 	}
