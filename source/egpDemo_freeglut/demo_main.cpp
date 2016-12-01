@@ -586,43 +586,43 @@ void onKeyboard(unsigned char key, int x, int y)
 			// CONVENIENCE FEATURE: 
 			// reload shaders
 		case 'P': 
-			deleteShaderPrograms();
-			loadShaderPrograms();
+			//deleteShaderPrograms();
+			//loadShaderPrograms();
 			break;
 			// reset physics shapes
 		case 'L': 
-			resetPhysics(0);
+			//resetPhysics(0);
 			break;
 
 			// PAUSE
 		case 'p': 
-			playing = (1 - playing);
+			//playing = (1 - playing);
 			break;
 
 			// CAMERA CONTROLS
 		case 'A':
 		case 'a':
-			keyLeft = -1;
+			//keyLeft = -1;
 			break;
 		case 'D':
 		case 'd':
-			keyRight = 1;
+			//keyRight = 1;
 			break;
 		case 'Q': 
 		case 'q': 
-			keyDown = -1;
+			//keyDown = -1;
 			break;
 		case 'E':
 		case 'e':
-			keyUp = 1;
+			//keyUp = 1;
 			break;
 		case 'W':
 		case 'w':
-			keyFwd = -1;
+			//keyFwd = -1;
 			break;
 		case 'S':
 		case 's':
-			keyBack = 1;
+			//keyBack = 1;
 			break;
 		
 		}
@@ -644,27 +644,27 @@ void onKeyboardUp(unsigned char key, int x, int y)
 			// CAMERA CONTROLS - STOP
 		case 'A':
 		case 'a':
-			keyLeft = 0;
+			//keyLeft = 0;
 			break;
 		case 'D':
 		case 'd':
-			keyRight = 0;
+			//keyRight = 0;
 			break;
 		case 'Q':
 		case 'q':
-			keyDown = 0;
+			//keyDown = 0;
 			break;
 		case 'E':
 		case 'e':
-			keyUp = 0;
+			//keyUp = 0;
 			break;
 		case 'W':
 		case 'w':
-			keyFwd = 0;
+			//keyFwd = 0;
 			break;
 		case 'S':
 		case 's':
-			keyBack = 0;
+			//keyBack = 0;
 			break;
 		case 'Z':
 		case 'z':
@@ -741,7 +741,10 @@ int initGL(int argc, char **argv)
 	int version[2];
 	glGetIntegerv(GL_MAJOR_VERSION, version);
 	glGetIntegerv(GL_MINOR_VERSION, version + 1);
-	printf("\n GL version: %d.%d", *(version), *(version + 1));
+	//printf("\n GL version: %d.%d", *(version), *(version + 1));
+
+	//Print Game Rules and Welcome
+	printf("\nWelcome to Boingo's Big Bingo Bango\n\nTo play you must make Boingo run away from Bongo by using Z and X\n");
 
 	// initialize extensions
 	int init = glewInit();
@@ -751,7 +754,7 @@ int initGL(int argc, char **argv)
 		// should be higher than the previous check if default is not highest
 		glGetIntegerv(GL_MAJOR_VERSION, version);
 		glGetIntegerv(GL_MINOR_VERSION, version + 1);
-		printf("\n GL version: %d.%d", *(version), *(version + 1));
+		//printf("\n GL version: %d.%d", *(version), *(version + 1));
 
 		// set callbacks
 		glutDisplayFunc(onDisplay);
