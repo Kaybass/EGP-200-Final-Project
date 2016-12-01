@@ -191,7 +191,6 @@ xcopy "$(DEV_SDK_DIR)bin\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\*
     <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_mover.cpp" />
     <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_spritecontroller.cpp" />
     <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_utils.cpp" />
-    <ClCompile Include="moon_camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\resource\tex\bg\bg_clouds.png" />
@@ -227,7 +226,6 @@ xcopy "$(DEV_SDK_DIR)bin\$(PlatformTarget)\$(PlatformToolset)\$(Configuration)\*
     <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_spritecontroller.h" />
     <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_squaredata.h" />
     <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_utils.h" />
-    <ClInclude Include="moon_camera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\resource\glsl\450\applyTransform_vs.glsl" />

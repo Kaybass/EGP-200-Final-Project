@@ -57,9 +57,6 @@
     <ClCompile Include="..\..\..\source\egpDemo_freeglut\demo_collisions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="moon_camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\resource\tex\bg\bg_clouds.png">
@@ -155,9 +152,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\source\egpDemo_freeglut\demo_collisions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="moon_camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

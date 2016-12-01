@@ -63,6 +63,8 @@ int playing = 0;
 // our game objects
 // good practice: default values for everything
 
+unsigned int punty = 0; //<- so important!
+
 // VAO handle for primitives
 
 unsigned int testCubeVAO = 0;
@@ -604,15 +606,23 @@ void onKeyboard(unsigned char key, int x, int y)
 			break;
 		case 'S':
 		case 's':
-			keyBack = 10;
+			keyBack = 1;
 			break;
 		case 'Z':
 		case 'z':
 			//move boingo
+			if (!playing)
+				playing = true;
+			demo::addPosition(&cube1, cbmath::vec3(1.0f, 0.0f, 0.0f));
+			punty++;
 			break;
 		case 'X':
 		case 'x':
 			//move boingo
+			if (!playing)
+				playing = true;
+			demo::addPosition(&cube1, cbmath::vec3(1.0f, 0.0f, 0.0f));
+			punty++;
 			break;
 		}
 	}
@@ -621,6 +631,10 @@ void onKeyboard(unsigned char key, int x, int y)
 		// quit button pressed, stop game loop
 		glutLeaveMainLoop();
 	}
+}
+
+void onYouAreALoser() {
+	printf("You lost, but you earned %d punty", punty);
 }
 
 // key released
