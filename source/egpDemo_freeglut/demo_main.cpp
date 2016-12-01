@@ -69,8 +69,6 @@ unsigned int testCubeVAO = 0;
 unsigned int testSquareVAO = 0;
 unsigned int testCubeWireVAO = 0;
 unsigned int testSquareWireVAO = 0;
-unsigned int testSphereLoResVAO = 0;
-unsigned int testSphereHiResVAO = 0;
 
 // VBO handles
 unsigned int testAxesInterleavedVBO = 0;
@@ -78,8 +76,6 @@ unsigned int testCubeInterleavedVBO = 0;
 unsigned int testSquareInterleavedVBO = 0;
 unsigned int testCubeWireInterleavedVBO = 0;
 unsigned int testSquareWireInterleavedVBO = 0;
-unsigned int testSphereLoResInterleavedVBO = 0;
-unsigned int testSphereHiResInterleavedVBO = 0;
 
 // IBO handles (indexed rendering)
 unsigned int testAxesIBO = 0;
@@ -123,11 +119,11 @@ cbtk::cbmath::mat4	sphereModelMatrix0, sphereModelMatrixInv0, sphereModelViewPro
 
 
 // physics objects
-demo::Mover sphere0, sphere1, cube0, cube1;
-demo::SBV sphereSBV0, sphereSBV1;
+demo::Mover cube0, cube1;
+
 demo::BBV cubeAABV0, cubeAABV1;
 
-bool sphere0intersect = false, sphere1intersect = false, cube0intersect = false, cube1intersect = false;
+bool cube0intersect = false, cube1intersect = false;
 
 
 //-----------------------------------------------------------------------------
@@ -162,13 +158,6 @@ void loadGeometry()
 	const float *allSquareWireAttribData[] = { (float *)(demo::simpleSquareVerticesWire) };
 	testSquareWireVAO = demo::createVAO(demo::simpleSquareVertexCount, 1, allSquareWireAttribData, testGeomAttribs, &testSquareWireInterleavedVBO);
 
-	// SETUP LOW-RES SPHERE VAO AND VBO
-	const float *allSphereLoResAttribData[] = { (float*)(demo::sphere8x6verticesOrganized), (float*)(demo::sphere8x6verticesOrganized), (float*)(demo::sphere8x6texcoordsOrganized) };
-	testSphereLoResVAO = demo::createVAO(demo::sphere8x6vertexCount, 3, allSphereLoResAttribData, testGeomAttribs, &testSphereLoResInterleavedVBO);
-
-	// SETUP HIGH-RES SPHERE VAO AND VBO
-	const float *allSphereHiResAttribData[] = { (float*)(demo::sphere32x24verticesOrganized), (float*)(demo::sphere32x24verticesOrganized), (float*)(demo::sphere32x24texcoordsOrganized) };
-	testSphereHiResVAO = demo::createVAO(demo::sphere32x24vertexCount, 3, allSphereHiResAttribData, testGeomAttribs, &testSphereHiResInterleavedVBO);
 
 //-----------------------------------------------------------------------------
 }
@@ -194,11 +183,6 @@ void deleteGeometry()
 	demo::deleteVAO(testSquareWireVAO);
 	demo::deleteBufferObject(testSquareWireInterleavedVBO);
 
-	demo::deleteVAO(testSphereLoResVAO);
-	demo::deleteBufferObject(testSphereLoResInterleavedVBO);
-
-	demo::deleteVAO(testSphereHiResVAO);
-	demo::deleteBufferObject(testSphereHiResInterleavedVBO);
 }
 
 
@@ -296,15 +280,8 @@ void resetPhysics(int playFlag)
 	playing = playFlag;
 
 
-	// movable objects
-	sphere0 = demo::createMover(
-		cbmath::vec3(-2.0f, -2.0f, 0.0f), cbmath::vec3(5.0f, 10.0f, 0.0f), gravity
-//	);
-		, 1.0f, &sphereModelMatrix0);
-	sphere1 = demo::createMover(
-		cbmath::vec3(+2.0f, -2.0f, 0.01f), cbmath::vec3(0.0f, 8.0f, 0.0f), gravity
-//	);
-		, 1.0f, &sphereModelMatrix1);
+
+
 	cube0 = demo::createMover(
 		cbmath::vec3(-2.0f, 2.0f, 0.02f), cbmath::v3zero, cbmath::v3zero
 //	);
@@ -315,16 +292,12 @@ void resetPhysics(int playFlag)
 		, 1.0f, &cubeModelMatrix1);
 
 
-	// force first update
-	demo::updateMoverEuler(&sphere0, 0.0f);
-	demo::updateMoverEuler(&sphere1, 0.0f);
+
 	demo::updateMoverEuler(&cube0, 0.0f);
 	demo::updateMoverEuler(&cube1, 0.0f);
 
 
-	// create default colliders
-	sphereSBV0 = demo::createSBV();
-	sphereSBV1 = demo::createSBV();
+
 	cubeAABV0 = demo::createBBV();
 	cubeAABV1 = demo::createBBV();
 }
@@ -431,15 +404,13 @@ void update(float dt)
 	if (playing)
 	{
 		// update movable objects
-		demo::updateMoverEuler(&sphere0, dt);
-		demo::updateMoverEuler(&sphere1, dt);
+
 		demo::updateMoverEuler(&cube0, dt);
 		demo::updateMoverEuler(&cube1, dt);
 
 
 		// update colliders
-		demo::setCenterSBV(&sphereSBV0, sphere0.position.xyz);
-		demo::setCenterSBV(&sphereSBV1, sphere1.position.xyz);
+
 
 		demo::setCenterBBV(&cubeAABV0, cube0.position.xyz);
 		demo::setCenterBBV(&cubeAABV1, cube1.position.xyz);
@@ -451,8 +422,6 @@ void update(float dt)
 		// update collision checks
 		demo::Collision ssbvTest, aabvTest;
 
-		ssbvTest = demo::testCollisionSBVvsSBV(&sphereSBV0, &sphereSBV1);
-		sphere0intersect = sphere1intersect = (ssbvTest.bvtA != demo::BVT_NONE);
 
 		aabvTest = demo::testCollisionBBVvsBBV(&cubeAABV0, &cubeAABV1);
 		cube0intersect = cube1intersect = (aabvTest.bvtA != demo::BVT_NONE);
@@ -523,27 +492,7 @@ void render()
 //	demo::drawIndexedVAO(demo::simpleCubeIndexCountWire, GL_LINES, GL_UNSIGNED_INT, testCubeWireVAO);
 
 
-	// sphere 0: 
-	sphereModelViewProjectionMatrix0 = viewProjMat * sphereModelMatrix0;
-	glUniformMatrix4fv(drawSolidColor_mvp, 1, 0, sphereModelViewProjectionMatrix0.m);
-	glUniform4fv(drawSolidColor_color, 1, (sphere0intersect ? greenTrans : redTrans));
-	demo::drawVAO(demo::sphere8x6vertexCount, GL_TRIANGLES, testSphereLoResVAO);
 
-	glUniform4fv(drawSolidColor_color, 1, blueTrans);
-	glCullFace(GL_FRONT);
-	demo::drawVAO(demo::sphere32x24vertexCount, GL_TRIANGLES, testSphereHiResVAO);
-	glCullFace(GL_BACK);
-
-	// sphere 1: 
-	sphereModelViewProjectionMatrix1 = viewProjMat * sphereModelMatrix1;
-	glUniformMatrix4fv(drawSolidColor_mvp, 1, 0, sphereModelViewProjectionMatrix1.m);
-	glUniform4fv(drawSolidColor_color, 1, (sphere1intersect ? greenTrans : redTrans));
-	demo::drawVAO(demo::sphere8x6vertexCount, GL_TRIANGLES, testSphereLoResVAO);
-
-	glUniform4fv(drawSolidColor_color, 1, blueTrans);
-	glCullFace(GL_FRONT);
-	demo::drawVAO(demo::sphere32x24vertexCount, GL_TRIANGLES, testSphereHiResVAO);
-	glCullFace(GL_BACK);
 
 
 	
