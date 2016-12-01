@@ -64,21 +64,21 @@ int playing = 0;
 // good practice: default values for everything
 
 // VAO handle for primitives
-unsigned int testAxesVAO = 0;
+
 unsigned int testCubeVAO = 0;
 unsigned int testSquareVAO = 0;
 unsigned int testCubeWireVAO = 0;
 unsigned int testSquareWireVAO = 0;
 
 // VBO handles
-unsigned int testAxesInterleavedVBO = 0;
+
 unsigned int testCubeInterleavedVBO = 0;
 unsigned int testSquareInterleavedVBO = 0;
 unsigned int testCubeWireInterleavedVBO = 0;
 unsigned int testSquareWireInterleavedVBO = 0;
 
 // IBO handles (indexed rendering)
-unsigned int testAxesIBO = 0;
+
 unsigned int testCubeIBO = 0;
 unsigned int testCubeWireIBO = 0;
 
@@ -147,8 +147,7 @@ void loadGeometry()
 	testCubeWireVAO = demo::createVAO(demo::simpleCubeVertexCountWire, 1, allCubeWireAttribData, testGeomAttribs, &testCubeWireInterleavedVBO);
 /**/
 	// SETUP AXES
-	const float *allAxesAttribData[] = { (float *)(demo::axesVertBuffer), (float *)(demo::axesColorBuffer) };
-	testAxesVAO = demo::createVAO(demo::axesVertexCount, 2, allAxesAttribData, testAxesAttribs, &testAxesInterleavedVBO);
+
 
 	// SETUP SQUARE VAO AND VBO
 	const float *allSquareAttribData[] = { (float*)(demo::simpleSquareVertices) };//, (float*)(demo::simpleSquareNormals), (float*)(demo::simpleSquareTexcoords) };
@@ -165,9 +164,7 @@ void loadGeometry()
 void deleteGeometry()
 {
 	// delete renderable data
-	demo::deleteVAO(testAxesVAO);
-	demo::deleteBufferObject(testAxesInterleavedVBO);
-	demo::deleteBufferObject(testAxesIBO);
+
 
 	demo::deleteVAO(testCubeVAO);
 	demo::deleteBufferObject(testCubeIBO);
@@ -283,13 +280,12 @@ void resetPhysics(int playFlag)
 
 
 	cube0 = demo::createMover(
-		cbmath::vec3(-2.0f, 2.0f, 0.02f), cbmath::v3zero, cbmath::v3zero
-//	);
-		, 1.0f, &cubeModelMatrix0);
+		cbmath::vec3(-2.0f, -2.0f, 0.02f), cbmath::vec3(1.0f,0.0f,0.0f), cbmath::v3zero, 1.0f, &cubeModelMatrix0);
+	
 	cube1 = demo::createMover(
-		cbmath::vec3(+2.0f, 2.0f, 0.03f), cbmath::vec3(-2.0f, 10.0f, 0.0f), gravity
-//	);
-		, 1.0f, &cubeModelMatrix1);
+		cbmath::vec3(+2.0f, -2.0f, 0.03f), cbmath::v3zero, cbmath::v3zero, 1.0f, &cubeModelMatrix1);
+
+	demo::addAcceleration(&cube0, cbmath::vec3(2.00f, 0.0f, 0.0f));
 
 
 
@@ -405,6 +401,8 @@ void update(float dt)
 	{
 		// update movable objects
 
+		//demo::setVelocity(&cube0,cbmath::vec3(0.01f,0.0f,0.0f));
+
 		demo::updateMoverEuler(&cube0, dt);
 		demo::updateMoverEuler(&cube1, dt);
 
@@ -456,7 +454,7 @@ void render()
 	demo::activateProgram(drawAttribColorProgram);
 	glUniformMatrix4fv(drawAttribColor_mvp, 1, 0, viewProjMat.m);
 
-	demo::drawVAO(demo::axesVertexCount, GL_LINES, testAxesVAO);
+
 
 
 	
@@ -606,7 +604,15 @@ void onKeyboard(unsigned char key, int x, int y)
 			break;
 		case 'S':
 		case 's':
-			keyBack = 1;
+			keyBack = 10;
+			break;
+		case 'Z':
+		case 'z':
+			//move boingo
+			break;
+		case 'X':
+		case 'x':
+			//move boingo
 			break;
 		}
 	}
