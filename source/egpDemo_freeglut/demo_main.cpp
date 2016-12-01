@@ -634,10 +634,6 @@ void onKeyboard(unsigned char key, int x, int y)
 	}
 }
 
-void onYouAreALoser() {
-	printf("You lost, but you earned %d punty", punty);
-}
-
 // key released
 void onKeyboardUp(unsigned char key, int x, int y)
 {
