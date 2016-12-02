@@ -7,7 +7,7 @@
 
 
 layout (location = 0) in vec4 position;
-layout (location = 1) in vec4 normal;
+layout (location = 4) in vec4 normal;
 layout (location = 8) in vec2 texcoord;
 
 layout (location = 0) uniform mat4 mvp;

@@ -12,7 +12,12 @@ layout (binding = 0) uniform sampler2D sprite;
 
 void main()
 {
-	vec4 final = texture(sprite, passtexcoord);
+
+	vec2 testCoord; 
+
+	testCoord = passtexcoord*1.6;
+
+	vec4 final = texture(sprite, testCoord);
 
 	fragColor = final;
 

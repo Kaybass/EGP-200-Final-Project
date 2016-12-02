@@ -151,7 +151,7 @@ void loadGeometry()
 
 	// SETUP SIMPLE CUBE VAO AND VBO
 	const float *allCubeAttribData[] = { (float*)(demo::cubeVertBuffer), (float *)(demo::cubeNormBuffer), (float*)(demo::cubeTexcoordBuffer) };
-	testCubeVAO = demo::createVAO(demo::simpleCubeVertexCount, 1, allCubeAttribData, testGeomAttribs, &testCubeInterleavedVBO);
+	testCubeVAO = demo::createVAO(demo::simpleCubeVertexCount, 3, allCubeAttribData, testGeomAttribs, &testCubeInterleavedVBO);
 
 	// WIRE CUBE
 	const float *allCubeWireAttribData[] = { (float *)(demo::cubeVertBufferWire) };
@@ -521,7 +521,7 @@ void render()
 	//demo::drawVAO(demo::simpleCubeVertexCountWire, GL_LINES, testCubeWireVAO);
 //	demo::drawIndexedVAO(demo::simpleCubeIndexCountWire, GL_LINES, GL_UNSIGNED_INT, testCubeWireVAO);
 	
-	glutSolidTeapot(2);
+	//glutSolidTeapot(2);
 
 
 	glActiveTexture(GL_TEXTURE0);
@@ -541,7 +541,7 @@ void render()
 
 
 
-	glutSolidTeapot(2);
+	//glutSolidTeapot(2);
 
 	
 //-----------------------------------------------------------------------------
