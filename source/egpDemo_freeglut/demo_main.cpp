@@ -501,8 +501,8 @@ void render()
 
 
 
-	puntyCount[0] = punty % 3; // gigapunty. 
-	puntyCount[1] = punty % 3; // gigapunty. 
+	puntyCount[0] = punty % 8; // gigapunty. 
+	puntyCount[1] = punty % 8; // gigapunty. 
 
 	//printf("%d\n", punty % 3);
 //-----------------------------------------------------------------------------

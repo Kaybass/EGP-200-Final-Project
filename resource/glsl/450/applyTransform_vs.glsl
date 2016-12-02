@@ -31,12 +31,20 @@ void main()
 
 	vec2 testcoord = texcoord; 
 
-	testcoord.x += .52;
-	testcoord.y += .60;
+	testcoord.x -= .33;
+	testcoord.y += .59;
 
-	testcoord /= .85;
+	testcoord /= .85; // manually set it to the first frame... 
 
-	passtexcoord = testcoord - (singleImage * frame);
+	int xint = int(frame.y); 
+	xint %= 3; 
+
+	
+	int yint = int(frame.y / 3); // want the loss of data
+
+	passtexcoord.x = testcoord.x - (singleImage.x * xint);
+	passtexcoord.y = testcoord.y - (singleImage.y * yint);
+
 
 
 
