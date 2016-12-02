@@ -4,28 +4,30 @@
 
 out vec4 fragColor;
 
-layout (location = 16) uniform vec4 solidColor;
+//layout (location = 16) uniform vec4 solidColor;
 
 in vec2 passtexcoord;
 in vec4 normals;
 in vec2 sizeOfTexture;
 in vec2 finalSize; 
 in vec2 singleImage;
+//in vec2 frame;
 
 layout (binding = 0) uniform sampler2D sprite;
 
 void main()
 {
 
+	
 
 	vec2 testCoord; 
 
-	testCoord.x = passtexcoord.x - .33; 
-	testCoord.y = passtexcoord.y + .60; 
+	//testCoord.x = passtexcoord.x - .43; 
+	//testCoord.y = passtexcoord.y + .24; 
 
-	testCoord /= .86;
+	//testCoord = passtexcoord / .33;
 
-	vec4 final = texture(sprite, testCoord);
+	vec4 final = texture(sprite, passtexcoord);
 
 	fragColor = final;
 

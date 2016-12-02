@@ -71,6 +71,8 @@ int playing = 0;
 
 unsigned int punty = 0; //<- so important!
 
+unsigned int puntyCount[] = { punty, punty }; // gigapunty. 
+
 // VAO handle for primitives
 
 unsigned int testCubeVAO = 0;
@@ -99,6 +101,7 @@ unsigned int drawSolidColorProgram = 0;
 // uniform handles
 unsigned int drawAttribColor_mvp = 0;
 unsigned int drawSolidColor_mvp = 0, drawSolidColor_color = 0;
+unsigned int frameHandle = 0;
 
 unsigned int bob = 0;
 unsigned int badBoi = 0;
@@ -136,6 +139,8 @@ demo::BBV cubeAABV0, cubeAABV1;
 
 bool cube0intersect = false, cube1intersect = false;
 
+//unsigned int ani = 0;// Increments whenever you press the button. 
+
 
 //-----------------------------------------------------------------------------
 // game functions
@@ -144,13 +149,13 @@ bool cube0intersect = false, cube1intersect = false;
 void loadGeometry()
 {
 	// attribute indices (match up with the attribute inputs in the VERTEX SHADER!!!)
-	const unsigned int testGeomAttribs[] = { demo::A_POSITION, demo::A_NORMAL, demo::A_TEXCOORD0 };
+	const unsigned int testGeomAttribs[] = { demo::A_POSITION, demo::A_NORMAL, demo::A_TEXCOORD0}; //Position in time... dude... 
 	const unsigned int testAxesAttribs[] = { demo::A_POSITION};
 
 //-----------------------------------------------------------------------------
 
 	// SETUP SIMPLE CUBE VAO AND VBO
-	const float *allCubeAttribData[] = { (float*)(demo::cubeVertBuffer), (float *)(demo::cubeNormBuffer), (float*)(demo::cubeTexcoordBuffer) };
+	const float *allCubeAttribData[] = { (float*)(demo::cubeVertBuffer), (float *)(demo::cubeNormBuffer), (float*)(demo::cubeTexcoordBuffer)};
 	testCubeVAO = demo::createVAO(demo::simpleCubeVertexCount, 3, allCubeAttribData, testGeomAttribs, &testCubeInterleavedVBO);
 
 	// WIRE CUBE
@@ -251,6 +256,7 @@ void loadShaderPrograms()
 
 	drawSolidColor_mvp = glGetUniformLocation(drawSolidColorProgram, "mvp");
 	drawSolidColor_color = glGetUniformLocation(drawSolidColorProgram, "solidColor");
+	frameHandle = glGetUniformLocation(drawSolidColorProgram, "frame");
 
 
 	// done
@@ -495,9 +501,10 @@ void render()
 
 
 
+	puntyCount[0] = punty % 3; // gigapunty. 
+	puntyCount[1] = punty % 3; // gigapunty. 
 
-
-	
+	//printf("%d\n", punty % 3);
 //-----------------------------------------------------------------------------
 // test geometry
 
@@ -513,6 +520,7 @@ void render()
 	cubeModelViewProjectionMatrix0 = viewProjMat * cubeModelMatrix0;
 	glUniformMatrix4fv(drawSolidColor_mvp, 1, 0, cubeModelViewProjectionMatrix0.m);
 	glUniform4fv(drawSolidColor_color, 1, (cube0intersect ? greenTrans : redTrans));
+	glUniform2f(frameHandle, 1, (GLfloat)*puntyCount);
 	demo::drawVAO(demo::simpleCubeVertexCount, GL_TRIANGLES, testCubeVAO);
 //	demo::drawIndexedVAO(demo::simpleCubeIndexCount, GL_TRIANGLES, GL_UNSIGNED_INT, testCubeVAO);
 
@@ -532,6 +540,7 @@ void render()
 	cubeModelViewProjectionMatrix1 = viewProjMat * cubeModelMatrix1;
 	glUniformMatrix4fv(drawSolidColor_mvp, 1, 0, cubeModelViewProjectionMatrix1.m);
 	glUniform4fv(drawSolidColor_color, 1, (cube1intersect ? greenTrans : redTrans));
+	glUniform2f(frameHandle, 1, (GLfloat) *puntyCount);
 	demo::drawVAO(demo::simpleCubeVertexCount, GL_TRIANGLES, testCubeVAO);
 //	demo::drawIndexedVAO(demo::simpleCubeIndexCount, GL_TRIANGLES, GL_UNSIGNED_INT, testCubeVAO);
 
