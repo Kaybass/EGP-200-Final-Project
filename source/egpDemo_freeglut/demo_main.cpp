@@ -100,6 +100,9 @@ unsigned int drawSolidColorProgram = 0;
 unsigned int drawAttribColor_mvp = 0;
 unsigned int drawSolidColor_mvp = 0, drawSolidColor_color = 0;
 
+unsigned int bob = 0;
+unsigned int badBoi = 0;
+
 // some color presets for quick and easy uniforms
 const float redTrans[4] = { 1.0f, 0.0f, 0.0f, 0.5f };
 const float greenTrans[4] = { 0.0f, 1.0f, 0.0f, 0.5f };
@@ -142,12 +145,12 @@ void loadGeometry()
 {
 	// attribute indices (match up with the attribute inputs in the VERTEX SHADER!!!)
 	const unsigned int testGeomAttribs[] = { demo::A_POSITION, demo::A_NORMAL, demo::A_TEXCOORD0 };
-	const unsigned int testAxesAttribs[] = { demo::A_POSITION, demo::A_COLOR0 };
+	const unsigned int testAxesAttribs[] = { demo::A_POSITION};
 
 //-----------------------------------------------------------------------------
 
 	// SETUP SIMPLE CUBE VAO AND VBO
-	const float *allCubeAttribData[] = { (float*)(demo::cubeVertBuffer) };//, (float *)(demo::cubeNormBuffer), (float*)(demo::cubeTexcoordBuffer) };
+	const float *allCubeAttribData[] = { (float*)(demo::cubeVertBuffer), (float *)(demo::cubeNormBuffer), (float*)(demo::cubeTexcoordBuffer) };
 	testCubeVAO = demo::createVAO(demo::simpleCubeVertexCount, 1, allCubeAttribData, testGeomAttribs, &testCubeInterleavedVBO);
 
 	// WIRE CUBE
@@ -158,7 +161,7 @@ void loadGeometry()
 
 
 	// SETUP SQUARE VAO AND VBO
-	const float *allSquareAttribData[] = { (float*)(demo::simpleSquareVertices) };//, (float*)(demo::simpleSquareNormals), (float*)(demo::simpleSquareTexcoords) };
+	const float *allSquareAttribData[] = { (float*)(demo::simpleSquareVertices) , (float*)(demo::simpleSquareNormals), (float*)(demo::simpleSquareTexcoords) };
 	testSquareVAO = demo::createVAO(demo::simpleSquareVertexCount, 1, allSquareAttribData, testGeomAttribs, &testSquareInterleavedVBO);
 
 	// WIRE SQUARE
@@ -264,7 +267,21 @@ void deleteShaderPrograms()
 // load and delete textures
 void loadTextures()
 {
+	bob = ilutGLLoadImage("../../../../resource/tex/sprite/bob.png");
 
+	glBindTexture(GL_TEXTURE_2D, bob);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);	// these two are deliberately different
+
+	badBoi = ilutGLLoadImage("../../../../resource/tex/sprite/bongo.png");
+
+	glBindTexture(GL_TEXTURE_2D, badBoi);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);	// these two are deliberately different
 
 
 	glBindTexture(GL_TEXTURE_2D, 0);									// deactivate 2D texture
@@ -272,6 +289,9 @@ void loadTextures()
 
 void deleteTextures()
 {
+	iluDeleteImage(bob);
+	iluDeleteImage(badBoi);
+
 }
 
 
@@ -475,6 +495,8 @@ void render()
 
 
 
+
+
 	
 //-----------------------------------------------------------------------------
 // test geometry
@@ -484,6 +506,9 @@ void render()
 	demo::activateProgram(drawSolidColorProgram);
 	
 	// cube 0: 
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, badBoi);
+
 	// solid
 	cubeModelViewProjectionMatrix0 = viewProjMat * cubeModelMatrix0;
 	glUniformMatrix4fv(drawSolidColor_mvp, 1, 0, cubeModelViewProjectionMatrix0.m);
@@ -492,10 +517,17 @@ void render()
 //	demo::drawIndexedVAO(demo::simpleCubeIndexCount, GL_TRIANGLES, GL_UNSIGNED_INT, testCubeVAO);
 
 	// outline
-	glUniform4fv(drawSolidColor_color, 1, blueTrans);
-	demo::drawVAO(demo::simpleCubeVertexCountWire, GL_LINES, testCubeWireVAO);
+	//glUniform4fv(drawSolidColor_color, 1, blueTrans);
+	//demo::drawVAO(demo::simpleCubeVertexCountWire, GL_LINES, testCubeWireVAO);
 //	demo::drawIndexedVAO(demo::simpleCubeIndexCountWire, GL_LINES, GL_UNSIGNED_INT, testCubeWireVAO);
 	
+	glutSolidTeapot(2);
+
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, bob);
+
+
 	// cube 1: 
 	cubeModelViewProjectionMatrix1 = viewProjMat * cubeModelMatrix1;
 	glUniformMatrix4fv(drawSolidColor_mvp, 1, 0, cubeModelViewProjectionMatrix1.m);
@@ -503,13 +535,13 @@ void render()
 	demo::drawVAO(demo::simpleCubeVertexCount, GL_TRIANGLES, testCubeVAO);
 //	demo::drawIndexedVAO(demo::simpleCubeIndexCount, GL_TRIANGLES, GL_UNSIGNED_INT, testCubeVAO);
 
-	glUniform4fv(drawSolidColor_color, 1, blueTrans);
-	demo::drawVAO(demo::simpleCubeVertexCountWire, GL_LINES, testCubeWireVAO);
+	//glUniform4fv(drawSolidColor_color, 1, blueTrans);
+	//demo::drawVAO(demo::simpleCubeVertexCountWire, GL_LINES, testCubeWireVAO);
 //	demo::drawIndexedVAO(demo::simpleCubeIndexCountWire, GL_LINES, GL_UNSIGNED_INT, testCubeWireVAO);
 
 
 
-
+	glutSolidTeapot(2);
 
 	
 //-----------------------------------------------------------------------------
