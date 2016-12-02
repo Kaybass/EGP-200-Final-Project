@@ -13,6 +13,8 @@ layout (location = 8) in vec2 texcoord;
 layout (location = 0) uniform mat4 mvp;
 out vec2 passtexcoord;
 out vec4 normals;
+out vec2 sizeOfTexture;
+out vec2 singleImage; 
 
 
 
@@ -22,5 +24,12 @@ void main()
 
 	passtexcoord = texcoord;
 
+	//sizeOfTexture = vec2(768, 768);
+	
+
+	singleImage = vec2(0.333, 0.333);
+
 	gl_Position = mvp * position;
+
+	//gl_PointSize = 256 / position.w;
 }
