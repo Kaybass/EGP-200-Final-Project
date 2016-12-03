@@ -54,10 +54,10 @@ namespace demo
 		{ p1, n1, p1 },					// 1
 		{ n1, p1, p1 },					// 2
 		{ p1, p1, p1 },					// 3
-		{ n1, p1, n1 },					// 4
-		{ p1, p1, n1 },					// 5
-		{ n1, n1, n1 },					// 6
-		{ p1, n1, n1 },					// 7
+		//{ n1, p1, n1 },					// 4
+		//{ p1, p1, n1 },					// 5 me being lazy forgive me Dan sensei
+		//{ n1, n1, n1 },					// 6
+		//{ p1, n1, n1 },					// 7
 	};
 
 
