@@ -76,6 +76,7 @@ unsigned int puntyCount[] = { punty, punty }; // gigapunty.
 // VAO handle for primitives
 
 unsigned int testCubeVAO = 0;
+unsigned int testSkyboxVAO = 0;
 unsigned int testSquareVAO = 0;
 unsigned int testCubeWireVAO = 0;
 unsigned int testSquareWireVAO = 0;
@@ -96,6 +97,7 @@ unsigned int testCubeWireIBO = 0;
 // program handles
 unsigned int drawAttribColorProgram = 0;
 unsigned int drawSolidColorProgram = 0;
+unsigned int drawTextureProgram = 0;
 
 
 // uniform handles
@@ -103,13 +105,18 @@ unsigned int drawAttribColor_mvp = 0;
 unsigned int drawSolidColor_mvp = 0, drawSolidColor_color = 0;
 unsigned int frameHandle = 0;
 
+
+// Sprites
 unsigned int bob = 0;
 unsigned int badBoi = 0;
+unsigned int skybox = 0;
 
 // some color presets for quick and easy uniforms
 const float redTrans[4] = { 1.0f, 0.0f, 0.0f, 0.5f };
 const float greenTrans[4] = { 0.0f, 1.0f, 0.0f, 0.5f };
 const float blueTrans[4] = { 0.0f, 0.0f, 1.0f, 0.5f };
+
+cbtk::cbmath::mat4 cubeViewMatrix, cubeViewProjectionMatrix;
 
 
 // general: camera's view matrix and projection matrix
@@ -150,7 +157,11 @@ void loadGeometry()
 {
 	// attribute indices (match up with the attribute inputs in the VERTEX SHADER!!!)
 	const unsigned int testGeomAttribs[] = { demo::A_POSITION, demo::A_NORMAL, demo::A_TEXCOORD0}; //Position in time... dude... 
-	const unsigned int testAxesAttribs[] = { demo::A_POSITION};
+	const unsigned int testAxesAttribs[] = { demo::A_POSITION, demo::A_TEXCOORD0 };
+
+	// SETUP SIMPLE CUBE VAO AND VBO (for skybox)
+	const float *allSkyboxAttribData[] = { (float*)(demo::cubeVertBuffer), (float*)(demo::cubeTexcoordBuffer) };
+	testSkyboxVAO = demo::createVAO(36, 2, allSkyboxAttribData, testAxesAttribs, &testCubeInterleavedVBO);
 
 //-----------------------------------------------------------------------------
 
@@ -251,6 +262,34 @@ void loadShaderPrograms()
 		demo::unloadFile(&fsFile);
 	}
 
+	{
+		// program for skybox drawing
+		
+
+			fsFile = demo::loadFile("../../../../resource/glsl/450/drawTexture_fs.glsl");
+			fsHandle = demo::createShaderfromSource(fsFile.str, GL_FRAGMENT_SHADER);
+
+			// create vertex shader
+			vsFile = demo::loadFile("../../../../resource/glsl/450/passTexcoord_vs.glsl");
+			vsHandle = demo::createShaderfromSource(vsFile.str, GL_VERTEX_SHADER);
+
+			// configure program
+			drawTextureProgram = demo::createProgram();
+			demo::attachShaderToProgram(drawTextureProgram, vsHandle);
+			demo::attachShaderToProgram(drawTextureProgram, fsHandle);
+			demo::linkProgram(drawTextureProgram);
+			demo::validateProgram(drawTextureProgram);
+
+			demo::deleteShader(vsHandle);
+			demo::unloadFile(&vsFile);
+			
+
+			// done with shared shader object
+			demo::deleteShader(fsHandle);
+			demo::unloadFile(&fsFile);
+		
+	}
+
 	// uniforms
 	drawAttribColor_mvp = glGetUniformLocation(drawAttribColorProgram, "mvp");
 
@@ -273,6 +312,16 @@ void deleteShaderPrograms()
 // load and delete textures
 void loadTextures()
 {
+
+	skybox = ilutGLLoadImage("../../../../resource/tex/bg/sky_water.png");
+	glBindTexture(GL_TEXTURE_2D, skybox);							// activate 2D texture
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);	// texture gets large, smooth
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	// texture gets small, smooth
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);		// texture repeats on horiz axis
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);		// texture repeats on vert axis
+
+
+
 	bob = ilutGLLoadImage("../../../../resource/tex/sprite/bob.png");
 
 	glBindTexture(GL_TEXTURE_2D, bob);
@@ -295,6 +344,8 @@ void loadTextures()
 
 void deleteTextures()
 {
+
+	iluDeleteImage(skybox);
 	iluDeleteImage(bob);
 	iluDeleteImage(badBoi);
 
@@ -423,7 +474,7 @@ void update(float dt)
 
 	// camera
 	//updateCameraControlled(dt);
-//	updateCameraOrbit(dt);
+	updateCameraOrbit(dt);
 
 
 
@@ -431,7 +482,11 @@ void update(float dt)
 	viewMatrix = cbtk::cbmath::transformInverseNoScale(viewMatrix);
 	viewProjMat = projectionMatrix * viewMatrix;
 
-	
+	cubeViewMatrix = viewMatrix;
+	cubeViewMatrix.c3.set(0.0f, 0.0f, 0.0f, 1.0f);
+	cubeViewMatrix = cubeViewMatrix * cbtk::cbmath::makeScale4(50.0f);
+
+
 
 
 	// update control
@@ -500,6 +555,22 @@ void render()
 	//	- call appropriate draw function, based on whether we are indexed or not
 
 
+	// use simple texturing program
+	demo::activateProgram(drawTextureProgram);
+
+	// bind skybox texture 
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, skybox);
+
+	// send skybox transform
+	cubeViewProjectionMatrix = viewMatrix;
+	glUniformMatrix4fv(0, 1, 0, cubeViewProjectionMatrix.m);
+
+	// draw skybox - flip culling
+	glCullFace(GL_FRONT);
+	demo::drawVAO(36, GL_TRIANGLES, testSkyboxVAO);
+	glCullFace(GL_BACK);
+
 
 	puntyCount[0] = punty % 8; // gigapunty. 
 	puntyCount[1] = punty % 8; // gigapunty. 
@@ -552,7 +623,7 @@ void render()
 
 	//glutSolidTeapot(2);
 
-	
+
 //-----------------------------------------------------------------------------
 
 
