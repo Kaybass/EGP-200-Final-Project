@@ -1,7 +1,19 @@
 // applyTransform_vs.glsl
 // vertex shader that multiplies position attribute by mvp; sends result to GL for clipping
 #version 430
+//This file was modified with permission from the author. 
+//Owen Worked on this file. 
+//We completely changed the meaning of this file. It now does uv's for our animated sprite. 
 
+//Owen Sanders: ID# 0972230
+//Alex Apmann: ID# 0947096
+//EGP-200-01 - 12/4/2016 - PROJ 3 
+
+//Certificate of Authenticity: “I certify that this work is
+//entirely My own. The assessor of this project may reproduce this project
+//and provide copies to other academic staff, and / or communicate a copy of
+//this project to a plagiarism - checking service, which may retain a copy of the
+//project on its database.”
 
 
 

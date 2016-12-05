@@ -7,6 +7,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+//This file was modified with permission from the author. 
+//Alex worked on this file. Owen Worked on it some as well.
+//Alex added game logic, collision and forces from the world. 
+//Owen Added sprite related things. 
+
+//Owen Sanders: ID# 0972230
+//Alex Apmann: ID# 0947096
+//EGP-200-01 - 12/4/2016 - PROJ 3 
+
+//Certificate of Authenticity: “I certify that this work is
+//entirely My own. The assessor of this project may reproduce this project
+//and provide copies to other academic staff, and / or communicate a copy of
+//this project to a plagiarism - checking service, which may retain a copy of the
+//project on its database.”
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -41,6 +57,9 @@
 #define BONGO_ACCEL   cbmath::vec3(1.12f,0.0f,0.0f)
 
 
+//added by Alex Apmann: ID# 0947096
+// Gives the game a good feel. 
+
 
 //-----------------------------------------------------------------------------
 // globals
@@ -72,11 +91,12 @@ int playing = 0;
 unsigned int punty = 0; //<- so important!
 
 unsigned int puntyCount[] = { punty, punty }; // gigapunty. 
+											  //added by Owen Sanders: ID# 0972230
+											  //added by Alex Apmann: ID# 0947096
 
 // VAO handle for primitives
 
 unsigned int testCubeVAO = 0;
-unsigned int testSkyboxVAO = 0;
 unsigned int testSquareVAO = 0;
 unsigned int testCubeWireVAO = 0;
 unsigned int testSquareWireVAO = 0;
@@ -109,7 +129,10 @@ unsigned int frameHandle = 0;
 // Sprites
 unsigned int bob = 0;
 unsigned int badBoi = 0;
-unsigned int skybox = 0;
+
+//added by Owen Sanders: ID# 0972230
+//Handles for the two sprite sheets.
+
 
 // some color presets for quick and easy uniforms
 const float redTrans[4] = { 1.0f, 0.0f, 0.0f, 0.5f };
@@ -156,13 +179,12 @@ bool cube0intersect = false, cube1intersect = false;
 void loadGeometry()
 {
 	// attribute indices (match up with the attribute inputs in the VERTEX SHADER!!!)
-	const unsigned int testGeomAttribs[] = { demo::A_POSITION, demo::A_NORMAL, demo::A_TEXCOORD0}; //Position in time... dude... 
+	const unsigned int testGeomAttribs[] = { demo::A_POSITION, demo::A_NORMAL, demo::A_TEXCOORD0};
 	const unsigned int testAxesAttribs[] = { demo::A_POSITION, demo::A_TEXCOORD0 };
 
-	// SETUP SIMPLE CUBE VAO AND VBO (for skybox)
-	const float *allSkyboxAttribData[] = { (float*)(demo::cubeVertBuffer), (float*)(demo::cubeTexcoordBuffer) };
-	testSkyboxVAO = demo::createVAO(36, 2, allSkyboxAttribData, testAxesAttribs, &testCubeInterleavedVBO);
-
+	//Modified by Owen Sanders: ID# 0972230
+	//Had to make sure the shapes were holding all of the needed data for my shaderz
+	
 //-----------------------------------------------------------------------------
 
 	// SETUP SIMPLE CUBE VAO AND VBO
@@ -262,33 +284,7 @@ void loadShaderPrograms()
 		demo::unloadFile(&fsFile);
 	}
 
-	{
-		// program for skybox drawing
-		
-
-			fsFile = demo::loadFile("../../../../resource/glsl/450/drawTexture_fs.glsl");
-			fsHandle = demo::createShaderfromSource(fsFile.str, GL_FRAGMENT_SHADER);
-
-			// create vertex shader
-			vsFile = demo::loadFile("../../../../resource/glsl/450/passTexcoord_vs.glsl");
-			vsHandle = demo::createShaderfromSource(vsFile.str, GL_VERTEX_SHADER);
-
-			// configure program
-			drawTextureProgram = demo::createProgram();
-			demo::attachShaderToProgram(drawTextureProgram, vsHandle);
-			demo::attachShaderToProgram(drawTextureProgram, fsHandle);
-			demo::linkProgram(drawTextureProgram);
-			demo::validateProgram(drawTextureProgram);
-
-			demo::deleteShader(vsHandle);
-			demo::unloadFile(&vsFile);
-			
-
-			// done with shared shader object
-			demo::deleteShader(fsHandle);
-			demo::unloadFile(&fsFile);
-		
-	}
+	
 
 	// uniforms
 	drawAttribColor_mvp = glGetUniformLocation(drawAttribColorProgram, "mvp");
@@ -313,13 +309,6 @@ void deleteShaderPrograms()
 void loadTextures()
 {
 
-	skybox = ilutGLLoadImage("../../../../resource/tex/bg/sky_water.png");
-	glBindTexture(GL_TEXTURE_2D, skybox);							// activate 2D texture
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);	// texture gets large, smooth
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);	// texture gets small, smooth
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);		// texture repeats on horiz axis
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);		// texture repeats on vert axis
-
 
 
 	bob = ilutGLLoadImage("../../../../resource/tex/sprite/bob.png");
@@ -338,14 +327,14 @@ void loadTextures()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);	// these two are deliberately different
 
-
+																	//added by Owen Sanders: ID# 0972230
+																	
 	glBindTexture(GL_TEXTURE_2D, 0);									// deactivate 2D texture
 }
 
 void deleteTextures()
 {
 
-	iluDeleteImage(skybox);
 	iluDeleteImage(bob);
 	iluDeleteImage(badBoi);
 
@@ -377,7 +366,8 @@ void resetPhysics(int playFlag)
 	demo::updateMoverEuler(&cube0, 0.0f);
 	demo::updateMoverEuler(&cube1, 0.0f);
 
-
+	//added by Alex Apmann: ID# 0947096
+	//Updates the two boxes based on button presses and game state 
 
 	cubeAABV0 = demo::createBBV();
 	cubeAABV1 = demo::createBBV();
@@ -474,7 +464,7 @@ void update(float dt)
 
 	// camera
 	//updateCameraControlled(dt);
-	updateCameraOrbit(dt);
+	//updateCameraOrbit(dt);
 
 
 
@@ -530,10 +520,35 @@ void update(float dt)
 			punty = 0;
 
 			resetPhysics(0);
+			//added by Alex Apmann: ID# 0947096
+			//Used to end the currebt game
+
 		}
 
 
 	}
+
+	//Game balance by Owen Owen Sanders: ID# 0972230
+	if (punty > 50)
+	{
+		addVelocity(&cube0, cbmath::vec3(0.1f, 0.0f, 0.0f));
+	}
+
+	else if (punty > 150)
+	{
+		addVelocity(&cube0, cbmath::vec3(0.1f, 0.0f, 0.0f));
+	}
+	else if (punty > 250)
+	{
+		addVelocity(&cube0, cbmath::vec3(0.1f, 0.0f, 0.0f));
+	}
+	//VAC by Alex Apmann: ID# 0947096
+	if (punty > 500)
+	{
+		addVelocity(&cube0, cbmath::vec3(10.0f, 0.0f, 0.0f));
+	}
+
+
 }
 
 
@@ -548,28 +563,6 @@ void render()
 
 
 
-	// DRAW ALL OBJECTS - ALGORITHM: 
-	//	- activate shader program if different from last object
-	//	- bind texture we want to apply (skybox)
-	//	- send appropriate uniforms if different from last time we used this program
-	//	- call appropriate draw function, based on whether we are indexed or not
-
-
-	// use simple texturing program
-	demo::activateProgram(drawTextureProgram);
-
-	// bind skybox texture 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, skybox);
-
-	// send skybox transform
-	cubeViewProjectionMatrix = viewMatrix;
-	glUniformMatrix4fv(0, 1, 0, cubeViewProjectionMatrix.m);
-
-	// draw skybox - flip culling
-	glCullFace(GL_FRONT);
-	demo::drawVAO(36, GL_TRIANGLES, testSkyboxVAO);
-	glCullFace(GL_BACK);
 
 
 	puntyCount[0] = punty % 8; // gigapunty. 
@@ -622,7 +615,8 @@ void render()
 
 
 	//glutSolidTeapot(2);
-
+	//added by Owen Sanders: ID# 0972230
+	//Draws the two cubes, passes punty as a uniform to increment animation. 
 
 //-----------------------------------------------------------------------------
 
@@ -796,6 +790,9 @@ void onKeyboardUp(unsigned char key, int x, int y)
 			//cameraPosWorld = cameraPosWorld + cbmath::vec4(1.0f, 0.0f, 0.0f, 0.0f);
 			punty++;
 			break;
+
+			//added by Alex Apmann: ID# 0947096
+			//used to interface with game, and modify logic. 
 		}
 	}
 }
@@ -857,6 +854,9 @@ int initGL(int argc, char **argv)
 
 	//Print Game Rules and Welcome
 	printf("\nWelcome to Boingo's Big Bingo Bango\n\nTo play you must make Boingo run away from Bongo by using Z and X\n");
+
+	//added by Alex Apmann: ID# 0947096
+	//used to introduce game 
 
 	// initialize extensions
 	int init = glewInit();

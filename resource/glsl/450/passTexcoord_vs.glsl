@@ -3,9 +3,12 @@
 #version 450
 
 
-//This file was modified by	Owen Sanders with permission from the author. 
+//This file was modified with permission from the author. 
+//Owen Worked on this file. 
+//used in a skybox test. 
 
 //Owen Sanders: ID# 0972230
+//Alex Apmann: ID# 0947096
 //EGP-200-01 - 12/4/2016 - PROJ 3 
 
 //Certificate of Authenticity: “I certify that this work is
